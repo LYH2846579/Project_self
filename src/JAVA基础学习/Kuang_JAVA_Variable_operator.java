@@ -1,6 +1,8 @@
 package JAVA基础学习;
+//对JAVA中的基础类型进行学习，包括变量和运算符及JAVADoc等
 
 import javax.sound.midi.Soundbank;
+import java.util.Date;
 import java.util.zip.CheckedOutputStream;
 
 /**     文档注释
@@ -8,7 +10,7 @@ import java.util.zip.CheckedOutputStream;
  * @create 2021-07-24 16:05
  */
 
-public class Kuang
+public class Kuang_JAVA_Variable_operator
 {
     //常量定义  final       常量定义一般用大写字母表示
     static final double PI = 3.1415926;
@@ -22,6 +24,19 @@ public class Kuang
     int age;
     public static void main(String[] args)
     {
+
+        //package -> 文件夹 对比于命名空间
+        //一般使用公司域名倒置作为包名    -> www.baidu.com :  com.baidu.www
+        //包路径必须位于整个程序最顶端!   package JAVA基础学习;
+        //※ 尽量避免不同包里面名称重复的情况，为了导包可以正常进行
+        //JAVADoc : @author @version ...
+        //生成命令 在指定目录下打开命令行 + javadoc -encoding UTF-8 -charset UTF-8 + 文档名(Doc.java)
+
+
+        /*
+
+        *****************************************************************
+
         //运算符                       //快捷键: ctrl+D       复制当前行到下一行
         //long l = 12123L;            //规范:L
         //  JAVA支持自增自减运算符      //++,--
@@ -45,10 +60,8 @@ public class Kuang
         int score = 80;        //  true  false
         String type = score<60 ? "不及格":"及格";
         System.out.println(type);
-        /*
 
         *****************************************************************
-
         //附:变量命名规范
         //① 所有变量、方法、类名定义要 "见名知意"
         //② 类成员变量: 首字母小写和驼峰原则   monthSalary
@@ -61,18 +74,18 @@ public class Kuang
         int i = 10;
         System.out.println(i);
 
-        //变量类型  变量名字 = new Kuang();
-        Kuang kuang = new Kuang();
+        //变量类型  变量名字 = new Kuang_JAVA_Variable_operator();
+        Kuang_JAVA_Variable_operator kuang = new Kuang_JAVA_Variable_operator();
         System.out.println(kuang.age);
         System.out.println(kuang.name);
 
         //类变量 static
         System.out.println(salary);                 //无需实例化对象
-        System.out.println(Kuang.salary);           //可以用类名直接调用
+        System.out.println(Kuang_JAVA_Variable_operator.salary);           //可以用类名直接调用
 
         //静态变量
         System.out.println(PI);
-        System.out.println(Kuang.PI);
+        System.out.println(Kuang_JAVA_Variable_operator.PI);
 
         *****************************************************************
 
