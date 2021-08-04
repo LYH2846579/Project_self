@@ -7,6 +7,7 @@ import org.junit.Test;
  * @create 2021-07-30 10:50
  * //单元测试方法
  * //@Test执行自动导包import org.junit.Test;
+ *  ※   测试方法必须存在于public类中???
  */
 public class JUnitTest
 {
