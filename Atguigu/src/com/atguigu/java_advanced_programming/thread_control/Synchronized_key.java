@@ -1,0 +1,81 @@
+package com.atguigu.java_advanced_programming.thread_control;
+
+/**
+ * @author LYHstart
+ * @create 2021-08-11 9:21
+ *
+ * 处理同步问题的两种解决方案
+ *
+ * 这里以实现Runnable接口的方式对多线程进行创建
+ * (继承Thread类的方式受制于单继承的限制，接口方式更加灵活)
+ * (相同点：Thread类也是实现Runnable接口)
+ *
+ * 方式一：同步代码块
+ * synchronized(同步监视器)
+ * {
+ *     //需要被同步的代码
+ * }
+ * 说明:1.操作共享数据的代码，即为需要被同步的代码
+ *     2.共享数据:多个线程共同操作的变量。比如: ticket就是共享数据。
+ *     3.同步监视器，俗称:锁。任何一个类的对象，都可以充当锁。
+ *     要求:多个线程必须要共用同一把锁。    ->    该对象必须唯一
+ *     4.在JAVA中通过同步机制，解决线程安全问题
+ *     5.同步的方式,解决了线程的安全问题。---好处
+ *       操作同步代码时，只能有一个线程参与，其他线程等待。相当于是一个单线程的过程，效率低。---劣势
+ *
+ *
+ *
+ *
+ */
+public class Synchronized_key
+{
+    public static void main(String[] args)
+    {
+        Window2 w = new Window2();
+
+        Thread t1 = new Thread(w,"线程一：");
+        Thread t2 = new Thread(w,"线程二：");
+        Thread t3 = new Thread(w,"线程三：");
+
+        t1.start();         //同一线程若多次调用start()方法
+        t2.start();         //Exception in thread "main" java.lang.IllegalThreadStateException
+        t3.start();
+    }
+}
+
+class Window2 implements Runnable
+{
+    private int ticket = 100;
+    Object o = new Object();        //三个线程均以一个对象作为参数,所以可以以o作为监视器
+
+//    @Override             //会出现重复买票和错票
+//    public void run() {
+//        while (true)
+//        {
+//            if(ticket > 0)
+//            {
+//                System.out.println(Thread.currentThread().getName()+":"+ticket);
+//                ticket--;
+//            }
+//            else
+//                break;
+//        }
+//    }
+    @Override
+    //使用synchronized代码块解决   -> 括起操控共同数据的代码   ->  ticket为共同数据
+    public void run() {
+        while (true)
+        {
+            synchronized(this)      //填写this就可  //※三个线程对象共享一个Window2对象
+            {
+                if(ticket > 0)
+                {
+                    System.out.println(Thread.currentThread().getName()+":"+ticket);
+                    ticket--;
+                }
+                else
+                    break;
+            }
+        }
+    }
+}
