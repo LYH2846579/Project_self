@@ -1,5 +1,7 @@
 package com.atguigu.java_advanced_programming.thread_control;
 
+import org.junit.Test;
+
 /**
  * @author LYHstart
  * @create 2021-08-11 9:21
@@ -23,7 +25,8 @@ package com.atguigu.java_advanced_programming.thread_control;
  *     5.同步的方式,解决了线程的安全问题。---好处
  *       操作同步代码时，只能有一个线程参与，其他线程等待。相当于是一个单线程的过程，效率低。---劣势
  *
- *
+ * 方式二：同步方法
+ * 如果操作共享数据的代码完整的声明在一个方法中，我们不妨将此方法声明同步的。
  *
  *
  */
@@ -40,6 +43,18 @@ public class Synchronized_key
         t1.start();         //同一线程若多次调用start()方法
         t2.start();         //Exception in thread "main" java.lang.IllegalThreadStateException
         t3.start();
+    }
+
+    @Test                   //Run ... with Coverage 可以解决问题
+    public void test1()
+    {
+        Window3 w1 = new Window3("线程一：");
+        Window3 w2 = new Window3("线程二：");
+        Window3 w3 = new Window3("线程三：");
+
+        w1.start();
+        w2.start();
+        w3.start();
     }
 }
 
@@ -71,6 +86,35 @@ class Window2 implements Runnable
                 if(ticket > 0)
                 {
                     System.out.println(Thread.currentThread().getName()+":"+ticket);
+                    ticket--;
+                }
+                else
+                    break;
+            }
+        }
+    }
+}
+
+class Window3 extends Thread
+{
+    private static int ticket = 100;
+    public static Object o = new Object();  //使用类变量作为监视器
+
+    public Window3(String name) {
+        super(name);
+    }
+
+    //重写run方法
+    @Override
+    public void run() {
+        while (true)
+        {
+            //synchronized(o)      //以继承的方式实现Thread子类对象，监视器必须注意※
+            synchronized (Window2.class)    //使用类作为监视器!
+            {
+                if(ticket > 0)
+                {
+                    System.out.println(getName()+":"+ticket);
                     ticket--;
                 }
                 else
