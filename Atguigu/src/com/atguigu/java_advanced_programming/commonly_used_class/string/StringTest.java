@@ -1,4 +1,4 @@
-package com.atguigu.java_advanced_programming.commonly_used_class;
+package com.atguigu.java_advanced_programming.commonly_used_class.string;
 
 import org.junit.Test;
 
