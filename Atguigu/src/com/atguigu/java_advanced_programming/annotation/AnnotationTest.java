@@ -52,6 +52,8 @@ public class AnnotationTest
     {
         @SuppressWarnings("unused")
         int num = 10;
+
+        
     }
 
 
