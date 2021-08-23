@@ -2,8 +2,11 @@ package com.atguigu.java_advanced_programming.collection;
 
 import org.junit.Test;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author LYHstart
@@ -87,8 +90,104 @@ public class CollectionTest
         //remove -> 通过equals()方法判断是否是要删除的元素，若存在则返回true并将原有元素删除
         System.out.println(coll1.remove("CCC"));        //在成功删除之后会返回true
         System.out.println(coll1);
+        System.out.println(coll2);
 
+        //retainAll()
+        coll1.add(new Person("张三",18));     //添加匿名对象
+        coll2.add(new Person("张三",18));     //添加匿名对象
+        Person p = new Person("李四",19);     //实名对象  ->  可以在retainAll中保留下来
+        ((ArrayList) coll1).add(p);
+        ((ArrayList) coll2).add(p);
+        System.out.println(coll2.retainAll(coll1));
+        System.out.println(coll1);
+        System.out.println(coll2);
 
+        //输出
+        System.out.println(coll);
+        System.out.println(coll1);
+        System.out.println(coll2);
 
+        //contains增加
+        System.out.println(coll1.contains(new Person("李四", 19)));   //false
+        /*
+        附：由于String重写了equal()方法，在contains()方法中可以输出true
+           而在自定义Person类中没有重写equals()方法，所以输出为false
+         */
+
+        //equals()
+        Collection coll3 = Arrays.asList(coll2);        //将coll2整体作为参数存储到coll3中
+        System.out.println(coll3);
+        System.out.println(coll2.equals(coll3));        //false
+        //coll3.clear();                                //list不可以进行修改
+        //((List) coll3).add(p);
+        //System.out.println(coll2.equals(coll3));
+
+        Collection coll4 = new ArrayList();
+        ((ArrayList) coll4).add(p);
+        System.out.println(coll2.equals(coll4));        //true
+
+        //hashCode() -> 返回当前对象的哈希值
+        System.out.println(coll.hashCode());            //-2124658075
+
+        //集合 -> 数组 toArray()方法
+        Object[] array = coll.toArray();                //用Object[]类型数组进行接收，输出为array地址值↓
+        System.out.println(array);                      //[Ljava.lang.Object;@4ee285c6
+        for (int i = 0; i < array.length; i++)
+        {
+            System.out.println(array[i]);
+        }
+        //数组 -> 集合
+        String[] s = new String[]{"123","456"};
+        List<String> strings = Arrays.asList(s);
+        System.out.println(strings);
+
+        List arr1 = Arrays.asList(new int[]{123,465});  //识别为一个对象
+        System.out.println(arr1);
+        System.out.println(arr1.size());    //1
+
+        List arr2 = Arrays.asList(new Integer[]{123,456});  //两个对象
+        System.out.println(arr2);
+        System.out.println(arr2.size());    //2
+    }
+
+    @Test
+    public void test2()
+    {
+        System.out.println(Integer.MIN_VALUE);
+        System.out.println(Integer.MAX_VALUE);
+    }
+}
+
+class Person
+{
+    public String name;
+    public int age;
+
+    public Person() {
+    }
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public int getAge() {
+        return age;
+    }
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
     }
 }
