@@ -68,6 +68,14 @@ import java.util.*;
  *     TREEIFY_THRESHOLD: Bucket中链表长度大于该默认值，转化为红黑树:8
  *     MIN_TREEIFY_CAPACITY:桶中的Node被树化时最小的hash表容量:64
  *
+ *
+ *     总结：常用方法
+ *     增：Object put(Object key,Object value)
+ *     删：Object remove(Object key)
+ *     改：Object put(Object key,Object value)
+ *     查：Object get(Object key)
+ *     长度：int size()
+ *     遍历：keySet() \ values() \ entrySet()
  */
 public class MapTest
 {
@@ -166,5 +174,58 @@ public class MapTest
         //Set entrySet()    返回所有key-value对构成的Set集合
         Set entrySet = map.entrySet();
         System.out.println(entrySet);
+
+    }
+
+    @Test
+    public void test4()
+    {
+        /*
+        使用原始图操作遍历数据
+         */
+
+        //Set keySet()
+        Map map = new HashMap();
+        map.put("AA",17);
+        map.put("CC",18);
+        map.put("BB",19);
+        map.put(new String("DD"),20);
+
+        Set keySet = map.keySet();
+        System.out.println(keySet);
+
+        //Iterator遍历
+        Iterator iterator = keySet.iterator();
+        while(iterator.hasNext())
+            System.out.println(iterator.next().toString());
+
+
+        //Collection values()
+        Collection values = map.values();
+        System.out.println(values);
+
+        //Iterator遍历
+        Iterator iterator1 = values.iterator();
+        while(iterator1.hasNext())
+            System.out.println(iterator1.next().toString());
+
+
+        //Set entrySet()
+        Set entrySet = map.entrySet();
+        System.out.println(entrySet);
+
+        //Iterator遍历
+        Iterator iterator2 = map.entrySet().iterator();
+        while (iterator2.hasNext())
+            System.out.println(iterator2.next().toString());
+
+        //获取每一个entry的key-value
+        Iterator iterator3 = map.entrySet().iterator();
+        while(iterator3.hasNext())
+        {
+            Object obj = iterator3.next();           //ClassCastException
+            Map.Entry entry = (Map.Entry) obj;
+            System.out.println(entry.getKey()+"-"+entry.getValue());
+        }
     }
 }
