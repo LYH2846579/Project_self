@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * @author LYHstart
@@ -36,4 +37,11 @@ public class DAOTest
         //第二种方式
         list.forEach(System.out::println);
     }
+
+    @Test
+    public void test2()
+    {
+        System.out.println("Hello!");
+    }
+
 }
