@@ -1,5 +1,8 @@
 package com.atguigu.java_advanced_programming.generic.generic_exp;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * 自定义泛型类
  *
@@ -34,7 +37,7 @@ public class Order<T>
     public void setAge(int age) {
         this.age = age;
     }
-    //泛型
+    //泛型    (非泛型方法)
     public T getOrderT() {
         return orderT;
     }
@@ -49,5 +52,11 @@ public class Order<T>
                 ", age=" + age +
                 ", orderT=" + orderT +
                 '}';
+    }
+
+    //泛型方法
+    public <E> List<E> copyFromArrayToList(E[] arr)
+    {
+        return Arrays.asList(arr);
     }
 }

@@ -14,5 +14,4 @@ public interface Order1<T>
     void fun();
 
     public abstract void show();
-
 }
