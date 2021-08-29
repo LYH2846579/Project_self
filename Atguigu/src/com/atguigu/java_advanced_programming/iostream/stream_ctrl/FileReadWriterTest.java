@@ -1,11 +1,10 @@
 package com.atguigu.java_advanced_programming.iostream.stream_ctrl;
 
+import com.atguigu.java.inner_class.Outer;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.util.logging.Level;
 
 /**
  * @author LYHstart
@@ -120,11 +119,135 @@ public class FileReadWriterTest
                 }
             }
         }
-
-
-
-
         //System.out.println(file.getAbsolutePath());  //F:\Java\Project_self\Atguigu\Hello.txt
+    }
+
+    @Test   //对read()操作升级：使用read()的重载方法
+    public void test2()
+    {
+        FileReader fr = null;
+        try
+        {
+            //1.File类的实例化
+            File file = new File("F:\\Java\\Project_self\\Atguigu\\Hello.txt");
+
+            //2.FileReader流的实例化
+            fr = new FileReader(file);
+
+            //3.数据的输入
+            //read(char[] cbuf):返回每次读入cbuf数组中的字符个数。若达到文件末尾，返回-1
+            char[] cbuf = new char[5];
+            int read = 0;
+            while((read = fr.read(cbuf)) != -1)
+            {
+                //第一种遍历方式：for
+                //for(char c:cbuf)
+                //  System.out.print(c);  //Hello,World!orl
+                //for (int i = 0; i < read; i++)      //一定要小于read()方法读取的长度
+                //{
+                //    System.out.print(cbuf[i]);
+                //}
+
+                //第二种遍历方式
+                //String str = new String(cbuf);
+                //截断字符串
+                //str = str.substring(0,read);
+                //System.out.print(str);
+
+                //第三种遍历方式
+                String str = new String(cbuf,0, read);
+                //输出
+                System.out.print(str);
+            }
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        } finally
+        {
+            //FileReader流的关闭
+            try
+            {
+                fr.close();
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /*
+    从内存中写出数据到硬盘的文件里
+
+    File对应的硬盘中的文件如果不存在，在输出的过程中，会自动创建此文件。
+    File对应的硬盘中的文件如果存在:
+        如果流使用的构造器是:FileWriter(file,false) / FileWriter(file):对原有文件进行覆盖
+        如果流使用的构造器是:FileWriter(file,true):不会对原有文件覆盖，而是在原文件基础上追加内容
+     */
+    @Test
+    public void test3() throws IOException
+    {
+        //1.提供File类的对象，指出写出到的文件
+        File file = new File("Hello.txt");
+
+        //2.提供FileWriter的对象，用于数据的写出
+        FileWriter fw = new FileWriter(file);
+        //FileWriter fw = new FileWriter(file,true);    //在原有文件后追加
+
+        //3.写出的操作
+        fw.write("I have a dream!");
+        fw.write("you need a dream too!");
+
+        //4.流资源关闭操作
+        fw.close();
+    }
+
+    /*
+    将数据从文件中读取出来写入另一个文件之中
+     */
+    @Test
+    public void test4()
+    {
+        FileReader fr = null;
+        FileWriter fw = null;
+        try
+        {
+            //创建File类的对象
+            File file1 = new File("Hello.txt");
+            File file2 = new File("hi.txt");
+
+            //创建流对象FileRead、FileWrite
+            fr = new FileReader(file1);
+            fw = new FileWriter(file2);
+
+            //读取、处理、写入数据
+            char[] cbuf = new char[5];
+            int read;
+            String s = "";
+            while((read = fr.read(cbuf)) != -1)
+            {
+                //将读取的字符组合成字符串存储在String中
+                String temp = new String(cbuf,0,read);
+                s += temp;
+            }
+            //将读取的数据写入对应文件
+            fw.write(s);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        } finally
+        {
+            //流资源关闭
+            try
+            {
+                if(fr != null)
+                    fr.close();
+                if(fw != null)
+                fw.close();
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
 }
 
