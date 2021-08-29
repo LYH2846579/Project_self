@@ -1,4 +1,4 @@
-package com.atguigu.java_advanced_programming.iostream;
+package com.atguigu.java_advanced_programming.iostream.file_ctrl;
 
 import org.junit.Test;
 
