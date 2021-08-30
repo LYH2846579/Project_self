@@ -204,7 +204,7 @@ public class FileReadWriterTest
     /*
     将数据从文件中读取出来写入另一个文件之中
      */
-    @Test
+    @Test   //复制txt文件       -> 耗时:117
     public void test4()
     {
         FileReader fr = null;
@@ -219,18 +219,25 @@ public class FileReadWriterTest
             fr = new FileReader(file1);
             fw = new FileWriter(file2);
 
+            //计时开始
+            long begin = 0L;
+            long end = 0L;
+            begin = System.currentTimeMillis();
+
             //读取、处理、写入数据
             char[] cbuf = new char[5];
             int read;
             String s = "";
             while((read = fr.read(cbuf)) != -1)
             {
-                //将读取的字符组合成字符串存储在String中
-                String temp = new String(cbuf,0,read);
-                s += temp;
+                fw.write(cbuf,0,read);
             }
-            //将读取的数据写入对应文件
-            fw.write(s);
+
+            //计时结束
+            end = System.currentTimeMillis();
+            //输出计时
+            System.out.println("耗时:"+(end-begin));
+
         } catch (IOException e)
         {
             e.printStackTrace();
