@@ -1,4 +1,4 @@
-package com.atguigu.java_advanced_programming.network_programming;
+package com.atguigu.java_advanced_programming.network_programming.TCP;
 
 import org.junit.Test;
 
@@ -14,6 +14,8 @@ import java.net.UnknownHostException;
 /**
  * @author LYHstart
  * @create 2021-09-03 18:58
+ *
+ * TCP传输练习
  *
  * ※TCP是基于字节流的传输
  * TCP套接字编程总结:
@@ -39,7 +41,15 @@ import java.net.UnknownHostException;
  *        baos.toString().sout
  * ⑤ 资源关闭
  *    socket.close();
+ *
+ *  server:
+ *  ① 创建ServerSocket套接字 -> ServrSocket ss = new ServerSocket(8899);
+ *  ② 创建Socket套接字 -> Socket socket = ss.accept();
+ *  ③ 生成流对象(与clinet相似)
+ *  ④ 处理数据(输入输出)
+ *  ⑤ 流资源关闭
  */
+
 public class TCPTest2
 {
 

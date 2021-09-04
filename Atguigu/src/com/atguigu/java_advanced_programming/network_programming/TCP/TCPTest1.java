@@ -1,4 +1,4 @@
-package com.atguigu.java_advanced_programming.network_programming;
+package com.atguigu.java_advanced_programming.network_programming.TCP;
 
 import org.junit.Test;
 
@@ -32,6 +32,9 @@ import java.net.UnknownHostException;
  *  ④ 接受流处理                ByteArrayOutputStream baos = new ByteArrayOutputStream();
  *
  *  附：使用ByteArrayOutputStream接收，创建buffer数组 -> baos.write(buffer);
+ *
+ *  TCPTest1,TCPTest1_1等均为老师例子
+ *  TCPTest2,TCPTest3等为思考延伸
  */
 public class TCPTest1
 {
