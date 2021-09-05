@@ -25,10 +25,20 @@ public class Person extends Creature<String> implements Comparable,MyInterface
         this.age = age;
     }
 
-    private String show(String nation)
+    public void show()
+    {
+        System.out.println("我是一个人");
+    }
+
+    private String showNation(String nation)
     {
         System.out.println("我的国籍是:"+nation);
         return nation;
+    }
+
+    public static void showDesc()
+    {
+        System.out.println("我是一个可爱的人");
     }
 
     @MyAnnotation(value = "Method")
@@ -46,5 +56,15 @@ public class Person extends Creature<String> implements Comparable,MyInterface
     @Override
     public void info() {
         System.out.println("我是一个人");
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", id=" + id +
+                ", weight=" + weight +
+                '}';
     }
 }

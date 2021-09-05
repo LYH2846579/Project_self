@@ -3,9 +3,7 @@ package com.atguigu.java_advanced_programming.reflection.class_structure;
 import org.junit.Test;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
+import java.lang.reflect.*;
 
 /**
  * @author LYHstart
@@ -122,5 +120,107 @@ public class PersonTest
 
             System.out.println();
         }
+    }
+
+    @Test   //获取构造器内容   ->  获取到声明为public的构造器
+    public void test5() throws ClassNotFoundException
+    {
+        Class clazz = Class.forName("com.atguigu.java_advanced_programming.reflection.class_structure.Person");
+
+        Constructor[] constructors = clazz.getConstructors();
+        for(Constructor c:constructors)
+            System.out.println(c);
+    }
+
+    @Test   //获取构造器内容   ->  获取到自身的所有构造器
+    public void test6() throws ClassNotFoundException
+    {
+        Class clazz = Class.forName("com.atguigu.java_advanced_programming.reflection.class_structure.Person");
+
+        Constructor[] declaredConstructors = clazz.getDeclaredConstructors();
+        for(Constructor c:declaredConstructors)
+        {
+            //System.out.println(c);
+            //解析构造器信息的内容
+            //1.获取权限修饰符
+            int modifiers = c.getModifiers();
+            System.out.print(Modifier.toString(modifiers)+"\t");
+            //2.获取名称
+            String name = c.getName();
+            System.out.print(name+"\t");
+            //获取参数列表            //参数列表直接调用toString方法即可获取int arg1等数值
+            System.out.print("(");
+            Parameter[] parameters = c.getParameters();
+            for (int i = 0; i < parameters.length; i++)
+            {
+                if(i == parameters.length-1)
+                    System.out.print(parameters[i].toString());
+                else
+                    System.out.print(parameters[i].toString()+",");
+            }
+            System.out.print(")");
+            System.out.println();
+        }
+    }
+
+    @Test   //获取运行时类的父类
+    public void test7() throws ClassNotFoundException
+    {
+        Class clazz = Class.forName("com.atguigu.java_advanced_programming.reflection.class_structure.Person");
+
+        //获取普通的父类
+        Class superclass = clazz.getSuperclass();
+        System.out.println(superclass);     //class com.atguigu.java_advanced_programming.reflection.class_structure.Creature
+
+        //获取带泛型的父类
+        Type genericSuperclass = clazz.getGenericSuperclass();
+        System.out.println(genericSuperclass);  //class com.atguigu.java_advanced_programming.reflection.class_structure.Creature
+
+        //获取父类的泛型
+        ParameterizedType type = (ParameterizedType) genericSuperclass;
+        Type[] typeArguments = type.getActualTypeArguments();
+        for(Type t:typeArguments)
+            System.out.println(t.getTypeName());
+    }
+
+    @Test   //获取运行时类实现的接口
+    public void test8() throws ClassNotFoundException
+    {
+        Class clazz = Class.forName("com.atguigu.java_advanced_programming.reflection.class_structure.Person");
+
+        Class[] interfaces = clazz.getInterfaces();
+        for(Class c:interfaces)
+        {
+            System.out.println(c);
+        }
+        System.out.println();
+
+        //获取父类实现的接口
+        Class superclass = clazz.getSuperclass();
+
+        Class[] superclassInterfaces = superclass.getInterfaces();
+        for(Class c:superclassInterfaces)
+        {
+            System.out.println(c);
+        }
+    }
+
+    @Test //获取当前运行时类所在的包
+    public void test9() throws ClassNotFoundException
+    {
+        Class clazz = Class.forName("com.atguigu.java_advanced_programming.reflection.class_structure.Person");
+
+        Package aPackage = clazz.getPackage();
+        System.out.println(aPackage);
+    }
+
+    @Test   //获取运行时类的注解
+    public void test10()
+    {
+        Class clazz = Person.class;
+
+        Annotation[] annotations = clazz.getAnnotations();
+        for(Annotation a:annotations)
+            System.out.println(a);
     }
 }
