@@ -2,6 +2,8 @@ package com.atguigu.java_advanced_programming.reflection;
 
 import org.junit.Test;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 /**
@@ -67,4 +69,5 @@ public class NewInstanceTest
     Sat Sep 04 19:46:46 CST 2021
     Person{name='null', age=0}
      */
+
 }
