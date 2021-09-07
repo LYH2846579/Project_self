@@ -1,8 +1,9 @@
-package sparse_array_and_queue;
+package sparse_array_and_queue.sparse_array;
 
 import org.junit.Test;
 
 import java.io.*;
+import java.util.Arrays;
 
 /**
  * @author LYHstart
@@ -91,7 +92,7 @@ public class SparseArrayTest1
         }
 
         //将稀疏数组输出到文件之中  //使用.txt文件存储
-        File file = new File("F:\\Java\\Project_self\\DataStructure\\src\\sparse_array_and_queue\\SparseArrayInfo.txt");
+        File file = new File("F:\\Java\\Project_self\\DataStructure\\src\\sparse_array_and_queue\\sparse_array\\SparseArrayInfo.txt");
 
 
         //流资源加载
@@ -130,7 +131,7 @@ public class SparseArrayTest1
     {
         //读取文件内容
         FileReader fr = null;
-        fr = new FileReader("F:\\Java\\Project_self\\DataStructure\\src\\sparse_array_and_queue\\SparseArrayInfo.txt");
+        fr = new FileReader("F:\\Java\\Project_self\\DataStructure\\src\\sparse_array_and_queue\\sparse_array\\SparseArrayInfo.txt");
 
         //读取数据
         char[] cbuf = new char[3];
@@ -174,6 +175,98 @@ public class SparseArrayTest1
             for (int j = 0; j < arr[0].length; j++)
             {
                 System.out.print(arr[i][j] + "\t");
+            }
+            System.out.println();
+        }
+    }
+
+    //这里练习一下I/O流
+    @Test   //使用缓冲流加速+转换流
+    public void test3() throws IOException
+    {
+        //生成稀疏数组
+        int[][] sparseArray = new int[3][3];
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                sparseArray[i][j] = j;
+            }
+        }
+        //输出稀疏数组
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                System.out.print(sparseArray[i][j]+"\t");
+            }
+            System.out.println();
+        }
+
+        File file = new File("F:\\Java\\Project_self\\DataStructure\\src\\sparse_array_and_queue\\sparse_array\\IO.txt");
+
+        FileOutputStream fos = new FileOutputStream(file);
+
+        //缓冲流
+        BufferedOutputStream bos = new BufferedOutputStream(fos);
+
+        //转换流
+        OutputStreamWriter osw = new OutputStreamWriter(bos,"UTF-8");
+
+        for (int i = 0; i < sparseArray.length; i++)
+        {
+            for (int j = 0; j < sparseArray[0].length; j++)
+            {
+                osw.write(sparseArray[i][j]);
+            }
+        }
+
+        //流资源关闭
+        osw.close();
+    }
+
+    @Test   //读取文件      ->      成功!
+    public void test4() throws IOException
+    {
+        //File
+        File file = new File("F:\\Java\\Project_self\\DataStructure\\src\\sparse_array_and_queue\\sparse_array\\IO.txt");
+        //字节流
+        FileInputStream fis = new FileInputStream(file);
+        //缓冲流
+        BufferedInputStream bis = new BufferedInputStream(fis);
+        //转换流
+        InputStreamReader isr = new InputStreamReader(bis);
+
+        //读取
+        char[] cbuf = new char[3];
+        isr.read(cbuf);
+        int row = cbuf[0];
+        int col = cbuf[1];
+        int count = cbuf[2];
+        //创建稀疏数组
+        int[][] arr = new int[3][3];
+        //读取数据
+        arr[0][0] = row;
+        arr[0][1] = col;
+        arr[0][2] = count;
+        //读取数据 -> 填充数组
+        //位置定位
+        int m = 1;
+        int n = 0;
+        for (int i = 0; i < count; i++)
+        {
+            isr.read(cbuf);
+            arr[m][n++] = cbuf[0];
+            arr[m][n++] = cbuf[1];
+            arr[m++][n] = cbuf[2];
+            n = 0;
+        }
+        //数组输出
+        for (int i = 0; i < arr.length; i++)
+        {
+            for (int j = 0; j < arr[0].length; j++)
+            {
+                System.out.print(arr[i][j]+"\t");
             }
             System.out.println();
         }
