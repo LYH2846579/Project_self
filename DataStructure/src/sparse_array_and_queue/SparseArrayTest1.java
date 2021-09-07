@@ -18,6 +18,10 @@ import java.io.*;
  *    [1] 写出时int值转换为ASCII表中对应位置的符号!
  *    [2] 读取时需要将符号转换为int类型
  * ⑤ 读取文件数据的时候，使用cbuf以每三个一组读取即可 -> (char[] cbuf = new char[3];)
+ *
+ * 待解决的问题：
+ * ① ASCII值的范围为0~127，若棋盘超出此范围，如何处理?
+ *    附：经试验表明，当棋盘大小为2555*2555的时候，仍可以正常保存!
  */
 public class SparseArrayTest1
 {
@@ -25,7 +29,7 @@ public class SparseArrayTest1
     public void test1()
     {
         //创建原始只有两颗棋子的数组 -> 黑色为1，蓝色为2
-        int[][] arr = new int[12][12];  //行列！
+        int[][] arr = new int[2555][2555];  //行列！
         arr[1][2] = 1;
         arr[2][3] = 2;
 
@@ -137,24 +141,24 @@ public class SparseArrayTest1
         int row = (int)cbuf[0];
         int col = (int)cbuf[1];
         int count = (int)cbuf[2];
-        //System.out.println(count);
+        System.out.println(row+"\t"+col+"\t"+count);
         //创建二维数组
         int[][] arr = new int[row][col];
         for (int i = 0; i < count; i++)
         {
             fr.read(cbuf);
-            //System.out.println("**"+(int)cbuf[0]+"\t"+(int)cbuf[1]+"\t"+(int)cbuf[2]+"**");
+            System.out.println("**"+(int)cbuf[0]+"\t"+(int)cbuf[1]+"\t"+(int)cbuf[2]+"**");
             arr[(int)cbuf[0]][(int)cbuf[1]] = (int)cbuf[2];
         }
         //输出二维数组
-        for (int i = 0; i < arr.length; i++)
-        {
-            for (int j = 0; j < arr[0].length; j++)
-            {
-                System.out.print(arr[i][j]+"\t");
-            }
-            System.out.println();
-        }
+//        for (int i = 0; i < arr.length; i++)
+//        {
+//            for (int j = 0; j < arr[0].length; j++)
+//            {
+//                System.out.print(arr[i][j]+"\t");
+//            }
+//            System.out.println();
+//        }
     }
 
     @Test   //测试JAVA数组行列
