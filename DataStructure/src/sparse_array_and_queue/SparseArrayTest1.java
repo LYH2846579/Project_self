@@ -2,9 +2,22 @@ package sparse_array_and_queue;
 
 import org.junit.Test;
 
+import java.io.*;
+
 /**
  * @author LYHstart
  * @create 2021-09-06 20:12
+ *
+ * 实现五子棋存档功能
+ *
+ * 总结:
+ * ① 数组下标从0开始!一定注意！！！
+ * ② 稀疏数组的行数比有效值的个数+1  ->  需要多出一行存储原始数组的属性
+ * ③ 将稀疏数组输出到文件中时，将数据直接输出即可(换行将会严重影响数据的准确性!)
+ * ④ 使用FileReader和FileWriter输出和读入数组时
+ *    [1] 写出时int值转换为ASCII表中对应位置的符号!
+ *    [2] 读取时需要将符号转换为int类型
+ * ⑤ 读取文件数据的时候，使用cbuf以每三个一组读取即可 -> (char[] cbuf = new char[3];)
  */
 public class SparseArrayTest1
 {
@@ -73,7 +86,75 @@ public class SparseArrayTest1
             System.out.println();
         }
 
+        //将稀疏数组输出到文件之中  //使用.txt文件存储
+        File file = new File("F:\\Java\\Project_self\\DataStructure\\src\\sparse_array_and_queue\\SparseArrayInfo.txt");
 
+
+        //流资源加载
+        FileWriter fw = null;
+        try
+        {
+            fw = new FileWriter(file);
+            //处理数据 -> 将稀疏数组中的内容写到文件之中
+            for (int i = 0; i < sparseArray.length; i++)
+            {
+                for (int j = 0; j < sparseArray[0].length; j++)
+                {
+                    fw.write(sparseArray[i][j]);        //int -> 显示在txt文件中的为ASCII表中的位置!
+                }
+                //fw.write("\n"); //换行          //换行会严重影响读取的数据准确性!
+            }
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        } finally
+        {
+            //流资源关闭
+            try
+            {
+                if(fw != null)
+                    fw.close();
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Test   //尝试还原棋盘
+    public void test2() throws IOException
+    {
+        //读取文件内容
+        FileReader fr = null;
+        fr = new FileReader("F:\\Java\\Project_self\\DataStructure\\src\\sparse_array_and_queue\\SparseArrayInfo.txt");
+
+        //读取数据
+        char[] cbuf = new char[3];
+        int read;
+        read = fr.read(cbuf);
+        //for(char c:cbuf)
+        //    System.out.print((int)c+"\t");
+        int row = (int)cbuf[0];
+        int col = (int)cbuf[1];
+        int count = (int)cbuf[2];
+        //System.out.println(count);
+        //创建二维数组
+        int[][] arr = new int[row][col];
+        for (int i = 0; i < count; i++)
+        {
+            fr.read(cbuf);
+            //System.out.println("**"+(int)cbuf[0]+"\t"+(int)cbuf[1]+"\t"+(int)cbuf[2]+"**");
+            arr[(int)cbuf[0]][(int)cbuf[1]] = (int)cbuf[2];
+        }
+        //输出二维数组
+        for (int i = 0; i < arr.length; i++)
+        {
+            for (int j = 0; j < arr[0].length; j++)
+            {
+                System.out.print(arr[i][j]+"\t");
+            }
+            System.out.println();
+        }
     }
 
     @Test   //测试JAVA数组行列
