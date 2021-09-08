@@ -1,4 +1,4 @@
-package sparse_array_and_queue.linked_list.single_linked_list;
+package linked_list.single_linked_list.test1;
 
 import org.junit.Test;
 
