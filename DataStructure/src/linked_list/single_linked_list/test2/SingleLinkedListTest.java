@@ -31,6 +31,7 @@ public class SingleLinkedListTest
             {
                 case 0:
                     System.out.println("欢迎下次使用单链表!");
+                    list.destroy();
                     System.exit(0);
                 case 1:
                     System.out.println("请输入结点数据:");
@@ -68,6 +69,9 @@ public class SingleLinkedListTest
                 case 8:
                     list.sort();
                     break;
+                case 9:
+                    list.clear();
+                    break;
                 default:
                     break;
             }
@@ -81,6 +85,7 @@ public class SingleLinkedListTest
         System.out.println("*  [3] print      [4] pushFront  *");
         System.out.println("*  [5] popFront   [6] insert     *");
         System.out.println("*  [7] reverse    [8] sort       *");
+        System.out.println("*  [9] clear      [0] exit       *");
         System.out.println("请输入您的选择:");
     }
 }

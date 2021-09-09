@@ -5,6 +5,12 @@ package linked_list.single_linked_list.test2;
  * @create 2021-09-08 18:56
  *
  * 实现单链表基本的功能
+ *
+ * 总结：
+ *  ① 在实现逆序与排序的时候，first和last指针需要进行改变!
+ *  ② 在实现逆序与排序的时候，每插入一个结点，需要再次向后获取一个新的结点!   ->  要不然怎么结束！！！
+ *  ③ 在实现排序的时候，需要对泛型的大小比较进行分析，需要考虑插入的位置(头插、尾插)等
+ *  ④ 清空时需要注意length的修改和尾指针的修改
  */
 public class SingleLinkedList<T extends Comparable>
 {
@@ -206,7 +212,7 @@ public class SingleLinkedList<T extends Comparable>
         }
     }
 
-    //排序 -> 与逆序类似       存在问题!!!
+    //排序 -> 与逆序类似       存在问题!!! -> 未修改first指针
     public void sort()
     {
         //增加一个判断标识
@@ -244,12 +250,15 @@ public class SingleLinkedList<T extends Comparable>
                     //泛型如何实现比大小?
                     while(true)
                     {
+                        //调用泛型compareTo()       //当t == null时下面空指针检测会识别出来并进行尾插
                         tag = s.getData().compareTo(t.getData());
                         if(tag == 0)
                         {
                             //直接在t后插入
                             s.setNext(t.getNext());
                             t.setNext(s);
+                            //别忘了获取下一个节点!
+                            s = this.first.getNext();
                             break;
                         }
                         else if(tag > 0)
@@ -260,14 +269,27 @@ public class SingleLinkedList<T extends Comparable>
                         }
                         else    //tag < 0
                         {
-                            //执行头插
+                            //在该元素前插入
                             s.setNext(t);
                             q.setNext(s);
+                            //别忘了获取下一个节点!
+                            s = this.first.getNext();
+                            break;
+                        }
+                        //增加空指针异常校验机制 t == null
+                        if(t == null)
+                        {
+                            s.setNext(null);
+                            q.setNext(s);
+                            //别忘了获取下一个节点!
+                            s = this.first.getNext();
                             break;
                         }
                     }
                 }
             }
+            //修改first
+            this.first = temp;
             //修改last
             s = this.first.getNext();
             if(s == null)
@@ -279,5 +301,29 @@ public class SingleLinkedList<T extends Comparable>
                 this.last = s;
             }
         }
+    }
+
+    //清空
+    public void clear()
+    {
+        //使用first和辅助指针依次释放结点
+        SingleLinkedListNode s = this.first.getNext();
+        while(s != null)
+        {
+            this.first.setNext(s.getNext());
+            s.setNext(null);
+            s = this.first.getNext();
+        }
+        //修改last
+        this.last = this.first;
+        //修改length
+        this.length = 0;
+    }
+
+    //摧毁
+    public void destroy()
+    {
+        this.clear();
+        this.first = this.last = null;
     }
 }

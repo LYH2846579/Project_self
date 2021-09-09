@@ -26,11 +26,142 @@
 3.直接按照老鲍的方式将单链表的所有结构构建出来！   鲍松山yyds!
 (1)初始化链表、尾插、尾删、头插、头删、遍历、查找、有效长度、随机插入、排序、逆序、清空、摧毁、判空
 (2)单链表的常见面试题有如下:
-    1)求单链表中有效节点的个数
-    2)查找单链表中的倒数第k个结点【新浪面试题】
-    3)单链表的反转【腾讯面试题，有点难度】
-    4)从尾到头打印单链表【百度，要求方式1:反向遍历。方式2: Stack栈】
-    5)合并两个有序的单链表，合并之后的链表依然有序【课后练习.】
+    1)求单链表中有效节点的个数                                  ->length
+    2)查找单链表中的倒数第k个结点【新浪面试题】                    ->length-index
+    3)单链表的反转【腾讯面试题，有点难度】                        ->reverse类似
+    4)从尾到头打印单链表【百度，要求方式1:反向遍历。方式2: Stack栈】 ->和reverse()类似   -> 使用栈
+    5)合并两个有序的单链表，合并之后的链表依然有序【课后练习.】       ->简单合并即可，和sort()类似
 
 附:[1] 在SingleLinkedList中对单链表中的所有功能进行实现
    [2] 泛型如何实现比大小?  在结点实现Comparable接口?   在泛型中使用<T extends Comparable>    ※
+   [3] 如何实现逆序与排序是关键点所在!
+   [4] 时刻需要注意first、last、length的修改
+
+以上：相关文件：(全部位于test2包中)
+     SingleLinkedList、SingleLikedListNode、SingleLinkedListTest
+
+
+4.接着将双向循环链表进行实现
+(1)在实现单链表基础功能之上，增加指定元素删除(结合find)，判定是否含有该元素并返回位置的操作
+
+
+
+5.排序典型失败案例
+    //排序
+    public void sort()
+    {
+        //判断是否为空或者仅存在一个结点
+        if(length == 0 || length == 1)
+            return;
+        else
+        {
+            //进行排序  -> 由于存在比较的情况，可以尝试无头结点的情况
+            /*
+            //1.创建辅助结点
+            DoubleCircularLinkedListNode<T> temp = new DoubleCircularLinkedListNode<>();
+            //2.形成单节点双向循环链表
+            temp.setPre(temp);
+            temp.setNext(temp);
+            */
+            //创建遍历指针
+            DoubleCircularLinkedListNode<T> d = this.first;
+            this.first = d.getNext();
+            //形成自循环
+            d.setNext(d);
+            d.setPre(d);
+            //创建一个新指针指向
+            DoubleCircularLinkedListNode<T> temp = d;
+            //新链表循环辅助指针
+            DoubleCircularLinkedListNode<T> t = temp;
+            //取出下一个结点
+            d = this.first;
+            //第一次不需要调整d!!!
+            int flag = 0;
+            while(d != null)   //当不为尾节点时，执行如下插入操作
+            {
+                if(d != this.last)
+                {
+                    if(flag != 0)
+                    {
+                        //修改first指向
+                        this.first = d.getNext();
+                        //将结点取出
+                        d.getNext().setPre(d.getPre());
+                        d.getPre().setNext(d.getNext());
+                    }
+                    flag++;
+                    d.setNext(null);
+                    d.setPre(null);
+                }
+                else
+                {
+                    this.first = null;
+                    d.setNext(null);
+                    d.setPre(null);
+                }
+
+                //一定要让t初始化!!!
+                t = temp;
+                //将该结点插入新的结点中
+                while(true)
+                {
+                    //1.倘若判断相等
+                    if(d.getData().compareTo(t.getData()) == 0)
+                    {
+                        //直接执行尾插
+                        d.setNext(t.getNext());
+                        d.setPre(t);
+                        t.getNext().setPre(d);
+                        t.setNext(d);
+                        //获取下一个结点
+                        d = this.first;
+                        break;
+                    }
+                    else if(d.getData().compareTo(t.getData()) > 0)
+                    {
+                        if(t.getNext() == temp)
+                        {
+                            //直接尾插
+                            d.setPre(t);
+                            d.setNext(t.getNext());
+                            t.getNext().setPre(d);
+                            t.setNext(d);
+                            //获取下一个结点
+                            d = this.first;
+                            break;
+                        }
+                        else
+                            //继续向后寻找
+                            t = t.getNext();        //可要分析清楚d和t的区别!!!
+                    }
+                    else // balabala < 0
+                    {
+                        if(t == temp)
+                        {
+                            temp = d;   //需要将temp时刻指向最小的结点!!!
+                        }
+                        //执行头插
+                        d.setPre(t.getPre());
+                        d.setNext(t);
+                        t.getPre().setNext(d);
+                        t.setPre(d);
+                        //获取下一个结点
+                        d = this.first;
+                        break;
+                    }
+                }
+            }
+            //修改first
+            this.first = temp;
+            //寻找last
+            d = temp.getNext();
+            if(d == temp)
+                this.last = d;
+            else
+            {
+                while(d.getNext() != this.first)    //一定注意是d.getNext()！ 否则链表中只能存有一个元素!
+                    d = d.getNext();
+                this.last = d;
+            }
+        }
+    }
