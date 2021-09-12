@@ -4,6 +4,83 @@
 
 2.(1)在RegTheory.java中对正则表达式的底层进行分析
 
+    * 分析JAVA的正则表达式的底层实现(重要.)
+     *
+     * matcher.find() 完成的任务
+     * 1. 根据指定的规则，定位满足规则的子字符串(如1998)
+     * 2. 找到后，将 子字符串的开始的索引记录到matcher对象的属性 int[] groups;
+     *    groups[0] = 0,把该子字符串的结束的索引+1的值记录到groups[1] = 4
+     * 3. 同时记录 oldLast 的值为子字符串的结束的索引+1 的值，即为4,()下次执行find方法时，就从4开始匹配
+     *
+     * matcher.group(0)分析：
+     * 源码：
+     * public String group(int group) {
+     *         if (first < 0)
+     *             throw new IllegalStateException("No match found");
+     *         if (group < 0 || group > groupCount())
+     *             throw new IndexOutOfBoundsException("No group " + group);
+     *         if ((groups[group*2] == -1) || (groups[group*2+1] == -1))
+     *             return null;
+     *         return getSubSequence(groups[group * 2], groups[group * 2 + 1]).toString();
+     *     }
+     *
+     * 1. 根据 groups[0]=31 和 groups[1]=35 的记录的位置，从content开始截取子字符串返回
+     *    就是[31,,35) 左闭右开区间
+     *
+     * 若再次调用find() -> 仍按照以上步骤执行 -》覆盖原有的groups[0]和groups[1]
+     *
+     *
+     *
+     * 若考虑分组的情况(即在创建匹配规则的时候使用小括号进行分组)
+     * 1.什么是分组：比如(\\d\\d)(\\d\\d)，正则表达式中出现小括号()表示分组
+     * 2.案例分析：
+     *   1) 不妨设regStr = "(\\d\\d)(\\d\\d)"  -> 匹配到的第一个字符串为(19)(98)
+     *   2) groups[0] = 0 ,groups[1] = 4
+     *   3) groups[2] = 0 ,groups[3] = 2
+     *   4) groups[4] = 2 ,groups[5] = 4
+     *   5) 若有更多分组，继续向下记录
+     * 附：matcher.group(0) -> 匹配到的整体的字符串
+     *    matcher.group(1) -> 匹配到的整体的字符串的第一个分组
+     *    matcher.group(2) -> 匹配到的整体的字符串的第二个分组
+     *    ...
+     *    注意：不可以超额取出分组!
+
+  (2)正则表达式语法:RegGrammar包中对正则表达式语法进行分析↓
+
+3.语法分析：
+  1)基本介绍:了解其中各种元字符的功能，元字符从功能上大致分为:
+    ① 限定符
+    ② 选择匹配符
+    ③ 分组组合和反向引用符
+    ④ 特殊字符
+    ⑤ 字符匹配符
+    ⑥ 定位符
+  2)元字符-转义号
+  \\符号 说明：在使用正则表达式检索某些特殊字符的时候，需要用到转义符号，否则检索不到匹配的结果!
+        如(使用$匹配"abc$(" -> 报错!)
+  另：在Java正则表达式中，两个\\相当于其他语言中的一个\
+  3)元字符-字符匹配符
+    在RegExp01中进行使用练习
+  4)元字符-选择匹配符
+  5)元字符-限定符
+    在RegExp02中对限定符进行使用练习
+    附：默认情况之下，JAVA默认使用贪婪匹配，即尽可能匹配多的
+  6)元字符-定位符
+    在RegExp03中对定位符的使用进行练习
+  7)分组
+    在RegExp04中对一般分组知识进行学习
+    在RegExp05中对特别分组进行学习
+
+4.实例练习: RegExp06
+  1) 匹配是否是汉字                    ->※\u4e00-\u9fa5
+  2) 是否是邮政编码
+     要求：是1-9开头的一个六位数。比如：252100
+  3) QQ号码:
+     要求:是1-9开头的一个(5位数-10位数) 比如:12365、4516133、1557965684
+  4) 手机号码:
+     要求：必须以13、14、15、18、19开头的十一位数，比如19819660666
+  5) URL
+     如：https://www.bilibili.com/video/BV1Eq4y1E79W?p=16&spm_id_from=pageDriver
 
 
 
