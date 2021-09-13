@@ -71,9 +71,20 @@ public class RegExp06
     https://blog.csdn.net/gao_zhennan/article/details/115700791
      */
 
-    @Test   //URL
+    @Test   //URL   -> ※注意，在[]中.?/*表示的就是其符号本身
     public void test5()
     {
+        String content = "https://blog.csdn.net/netyeaxi/article/details/107054479";
+                            //必须使用小括号!  -> []从中取出一个字符
+        //以下均满足格式
+        //String regStr = "^((http|https)://)([\\w-]+\\.)+[\\w-]+(\\/[\\w-.?&=/%]*)?$";
+        String regStr = "^(https?://)([\\w-]+\\.)+[\\w-]+(\\/[\\w-.?&=/%]*)?$";
 
+        Pattern pattern = Pattern.compile(regStr);
+        Matcher matcher = pattern.matcher(content);
+        if(matcher.find())
+            System.out.println("满足格式");
+        else
+            System.out.println("不满足格式");
     }
 }

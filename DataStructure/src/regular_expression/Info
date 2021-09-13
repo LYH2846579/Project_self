@@ -81,6 +81,20 @@
      要求：必须以13、14、15、18、19开头的十一位数，比如19819660666
   5) URL
      如：https://www.bilibili.com/video/BV1Eq4y1E79W?p=16&spm_id_from=pageDriver
+     ※注意，在[]中.?/*表示的就是其符号本身
+
+5.正则表达式三个常用类 -> 在commonly_used_class包中
+  1) Pattern    --> PatternMethod.java
+     -> matches
+  2) Matcher
+     ->start()
+     ->end()
+     ->matches()
+  3) PatternSyntaxException
+
+
+6.在HomeWork包中对正则表达式进行系统练习
+
 
 
 
