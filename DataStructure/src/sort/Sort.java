@@ -14,7 +14,7 @@ public class Sort
     @Test
     public void popSort()
     {
-        ArraySort arraysort = new ArraySort(8);
+        ArraySort arraysort = new ArraySort(27);
         int length = arraysort.length;
         int[] array = arraysort.array;
 
@@ -37,7 +37,7 @@ public class Sort
     @Test
     public void straightInsertionSortSort()
     {
-        ArraySort arraysort = new ArraySort(8);
+        ArraySort arraysort = new ArraySort(27);
         int length = arraysort.length;
         int[] array = arraysort.array;
 
@@ -62,7 +62,7 @@ public class Sort
     @Test
     public void selectSort()
     {
-        ArraySort arraysort = new ArraySort(16);
+        ArraySort arraysort = new ArraySort(27);
         int length = arraysort.length;
         int[] array = arraysort.array;
 
@@ -93,7 +93,7 @@ public class Sort
     @Test
     public void shellSortTest()
     {
-        ArraySort arraysort = new ArraySort(16);
+        ArraySort arraysort = new ArraySort(27);
         int[] dlta = {5,3,2,1};
         int length = dlta.length;
 
@@ -137,7 +137,7 @@ public class Sort
     @Test
     public void quickSortTest()
     {
-        ArraySort arraysort = new ArraySort(16);
+        ArraySort arraysort = new ArraySort(27);
 
         quickSort(arraysort,0,arraysort.length-1);  //注意high范围!
 
@@ -178,8 +178,8 @@ public class Sort
     @Test
     public void mergeSortTest()
     {
-        ArraySort arraySort = new ArraySort(16);
-        ArraySort temp = new ArraySort(16);
+        ArraySort arraySort = new ArraySort(27);
+        ArraySort temp = new ArraySort(27);
 
         mergeSort(arraySort,temp,0,arraySort.length-1);
 
@@ -203,7 +203,7 @@ public class Sort
         int length = arraySort.length;
 
         //拷贝
-        for (int i = 0; i < length; i++)
+        for (int i = left; i < right; i++)      //!!!   ※
         {
             temp.array[i] = array[i];
         }
