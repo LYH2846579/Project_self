@@ -1,0 +1,5 @@
+对Hash表进行学习
+
+1.在HashTest1中尝试自己实现散列函数Hashtable
+   -> 由HashTab、EmpLinkedList、Emp三个类组成
+   -> 功能:存储公司员工的各项信息，实现快速查找
