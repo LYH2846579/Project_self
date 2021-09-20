@@ -18,6 +18,7 @@ public class Order
         tree.addNode(new TreeNode(9));
         tree.addNode(new TreeNode(1));
 
+        //二叉树的遍历(递归)
         if(tree.getRoot() != null)
         {
             tree.preOrder(tree.getRoot());
@@ -29,6 +30,23 @@ public class Order
         }
         else
             System.out.println("当前二叉树为空!");
+
+        //二叉树结点查询(递归+双函数实现)
+        int key = 2;
+        TreeNode treeNode = tree.preFind(tree.getRoot(), key);
+        if(treeNode != null)
+            System.out.println("已查询到"+key+"结点存在");
+        else
+            System.out.println("经查询"+key+"结点不存在");
+
+        //二叉树结点查询(while())
+        TreeNode treeNode1 = tree.preFindWhile(tree.getRoot(), key);
+        if(treeNode != null)
+            System.out.println("已查询到"+key+"结点存在");
+        else
+            System.out.println("经查询"+key+"结点不存在");
+
+
     }
 
 }
@@ -110,6 +128,124 @@ class Tree
             postOrder(root.getRchild());
         System.out.print(root.getData()+" ");
 
+    }
+
+    //简单实现前序查找  -> (递归+双函数)
+    public TreeNode preFind(TreeNode root,int key)
+    {
+        if(root.getData() == key)
+            return root;
+        else if(root.getData() > key)
+        {
+            //倘若根节点的值较大
+            if(root.getLchild() != null)
+            {
+                TreeNode treeNode = preFindRecursion(root.getLchild(), key);
+                return treeNode;
+            }
+            else //左子树为空
+                return null;
+        }
+        else //root.getData() < key
+        {
+            //倘若根节点的值比较小
+            if(root.getRchild() != null)
+            {
+                return preFindRecursion(root.getRchild(),key);
+            }
+            else //右子树为空
+                return null;
+        }
+
+    }
+    public TreeNode preFindRecursion(TreeNode root,int key)
+    {
+        if(root.getData() == key)
+            return root;
+        else if(root.getLchild() != null)
+        {
+            return preFindRecursion(root.getLchild(),key);
+        }
+        else if(root.getRchild() != null)
+        {
+            return preFindRecursion(root.getRchild(),key);
+        }
+        else
+            return null;
+    }
+
+    //前序查找,非递归方式实现 -> while()
+    public TreeNode preFindWhile(TreeNode root,int key)
+    {
+            if(root.getData() == key)
+                return root;
+            else if(root.getData() > key)
+            {
+                //在左子树中查询
+                if(root.getLchild() != null)
+                {
+                    root = root.getLchild();
+                }
+                else
+                {
+                    //倘若左子树为空
+                    return null;
+                }
+                //进入左子树循环
+                while(true)
+                {
+                    if(root.getData() == key)
+                        return root;
+                    while(root.getData() > key && root.getLchild() != null)
+                    {
+                        root = root.getLchild();
+                    }
+                    if(root.getLchild() == null)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        //判断右子树是否存在
+                        if(root.getRchild() != null)
+                        {
+                            root = root.getRchild();
+                        }
+                        else
+                            return null;
+                    }
+
+                }
+            }
+            else //root.getData() < key
+            {
+                //在右子树中查询
+                if(root.getRchild() != null)
+                {
+                    root = root.getRchild();
+                }
+                else //右子树为空
+                    return null;
+                //进入右子树循环
+                while(true)
+                {
+                    if(root.getData() == key)
+                        return root;
+                    while(root.getData() < key && root.getRchild() != null)
+                    {
+                        root = root.getRchild();
+                    }
+                    if(root.getRchild() == null)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        //从左子树搜寻
+                        root = root.getLchild();
+                    }
+                }
+            }
     }
 }
 //二叉树的结点
