@@ -32,7 +32,7 @@ public class Order
             System.out.println("当前二叉树为空!");
 
         //二叉树结点查询(递归+双函数实现)
-        int key = 2;
+        int key = 10;
         TreeNode treeNode = tree.preFind(tree.getRoot(), key);
         if(treeNode != null)
             System.out.println("已查询到"+key+"结点存在");
@@ -41,12 +41,17 @@ public class Order
 
         //二叉树结点查询(while())
         TreeNode treeNode1 = tree.preFindWhile(tree.getRoot(), key);
-        if(treeNode != null)
+        if(treeNode1 != null)
             System.out.println("已查询到"+key+"结点存在");
         else
             System.out.println("经查询"+key+"结点不存在");
 
-
+        //老韩写的查询方式
+        TreeNode treeNode2 = tree.preFindPlus(tree.getRoot(), key);
+        if(treeNode2 != null)
+            System.out.println("已查询到"+key+"结点存在");
+        else
+            System.out.println("经查询"+key+"结点不存在");
     }
 
 }
@@ -200,7 +205,7 @@ class Tree
                     {
                         root = root.getLchild();
                     }
-                    if(root.getLchild() == null)
+                    if(root.getData() > key && root.getLchild() == null)
                     {
                         return null;
                     }
@@ -235,7 +240,7 @@ class Tree
                     {
                         root = root.getRchild();
                     }
-                    if(root.getRchild() == null)
+                    if(root.getData() < key && root.getRchild() == null)
                     {
                         return null;
                     }
@@ -246,6 +251,31 @@ class Tree
                     }
                 }
             }
+    }
+
+
+    //单函数递归实现查询的方式  -> 老师的思路
+    public TreeNode preFindPlus(TreeNode root,int key)
+    {
+        //判断是否是根节点
+        if(root.getData() == key)
+            return root;
+
+        //获取查询变量
+        TreeNode temp = null;
+        //判断是否有左子树
+        if(root.getLchild() != null)
+        {
+            temp = preFindPlus(root.getLchild(),key);
+        }
+        //判断temp
+        if(temp != null)
+            return temp;
+
+        //再次判断右结点
+        if(root.getRchild() != null)
+            temp = preFindPlus(root.getRchild(),key);
+        return temp;
     }
 }
 //二叉树的结点
