@@ -54,6 +54,30 @@ public class Order
             System.out.println("经查询"+key+"结点不存在");
     }
 
+    //测试删除结点
+    @Test
+    public void test2()
+    {
+        Tree tree = new Tree(new TreeNode(7));
+        tree.addNode(new TreeNode(2));
+        tree.addNode(new TreeNode(8));
+        tree.addNode(new TreeNode(10));
+        tree.addNode(new TreeNode(9));
+        tree.addNode(new TreeNode(1));
+
+        //删除结点1
+        tree.preOrder(tree.getRoot());
+        int key = 10;
+        boolean delete = tree.delete(tree, key);
+        System.out.println();
+        if(delete)
+            System.out.println("删除"+key+"成功");
+        else
+            System.out.println("删除失败!");
+        System.out.println();
+        tree.preOrder(tree.getRoot());
+    }
+
 }
 
 //创建一颗二叉树
@@ -102,6 +126,10 @@ class Tree
 
     public TreeNode getRoot() {
         return root;
+    }
+    public void setRoot(TreeNode node)
+    {
+        this.root = node;
     }
 
     //Order
@@ -276,6 +304,47 @@ class Tree
         if(root.getRchild() != null)
             temp = preFindPlus(root.getRchild(),key);
         return temp;
+    }
+
+    //二叉树结点的删除
+    public boolean delete(Tree tree,int key)
+    {
+        if(tree.getRoot() == null)
+            return false;
+        else if(tree.root.getData() == key)
+        {
+            tree.setRoot(null);
+            return true;
+        }
+        else
+        {
+            return delNode(tree.root,key);
+        }
+    }
+
+    private boolean delNode(TreeNode root, int key)
+    {
+        if(root.getLchild()!=null && root.getLchild().getData() == key)
+        {
+            root.setLchild(null);
+            return true;
+        }
+        else if(root.getRchild()!=null && root.getRchild().getData() == key)
+        {
+            root.setRchild(null);
+            return true;
+        }
+
+        boolean b = false;
+        if(root.getLchild() != null)
+        {
+            b = delNode(root.getLchild(), key);
+        }
+        if(b == true)
+            return b;
+        if(root.getRchild() != null)
+            return delNode(root.getRchild(),key);
+        return false;
     }
 }
 //二叉树的结点
