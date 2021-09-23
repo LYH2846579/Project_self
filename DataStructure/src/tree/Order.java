@@ -2,6 +2,8 @@ package tree;
 
 import org.junit.Test;
 
+import java.util.*;
+
 /**
  * @author LYHstart
  * @create 2021-09-19 16:52
@@ -78,6 +80,21 @@ public class Order
         tree.preOrder(tree.getRoot());
     }
 
+
+    //层次遍历测试
+    @Test
+    public void test3()
+    {
+        Tree tree = new Tree(new TreeNode(7));
+        tree.addNode(new TreeNode(2));
+        tree.addNode(new TreeNode(8));
+        tree.addNode(new TreeNode(10));
+        tree.addNode(new TreeNode(9));
+        tree.addNode(new TreeNode(1));
+
+        tree.levelOrder(tree.getRoot());
+    }
+
 }
 
 //创建一颗二叉树
@@ -85,10 +102,17 @@ class Tree
 {
     private TreeNode root;
 
+    //层次遍历需要的栈结构    ??? 使用队列才对!!!
+    private Stack<TreeNode> stack;
+    //private Queue<TreeNode> queue;
+    private LinkedQueue<TreeNode> queue;
+
     public Tree() {
     }
     public Tree(TreeNode root) {
         this.root = root;
+        this.stack = new Stack<>();
+        this.queue = new LinkedQueue<>();
     }
 
     //添加结点
@@ -346,6 +370,23 @@ class Tree
             return delNode(root.getRchild(),key);
         return false;
     }
+
+
+    //实现层次遍历    -> 使用手写队列成功实现!
+    public void levelOrder(TreeNode node)
+    {
+        if(node != null)
+            queue.offer(node);
+        while(!queue.isEmpty())
+        {
+            TreeNode temp = queue.poll();
+            System.out.print(temp.getData()+" ");
+            if(temp.getLchild() != null)
+                queue.offer(temp.getLchild());
+            if(temp.getRchild() != null)
+                queue.offer(temp.getRchild());
+        }
+    }
 }
 //二叉树的结点
 class TreeNode
@@ -385,6 +426,41 @@ class TreeNode
     public void setRchild(TreeNode rchild) {
         this.rchild = rchild;
     }
+}
 
+
+class LinkedQueue<T>
+{
+    //手撕链队列
+    private LinkedList<T> list;
+    private int length;
+
+    public LinkedQueue() {
+        this.list = new LinkedList<>();
+    }
+    public LinkedQueue(LinkedList<T> list) {
+        this.list = list;
+    }
+
+    public void offer(T t)
+    {
+        list.offerLast(t);
+        this.length++;
+    }
+    public T poll()
+    {
+        if(!list.isEmpty())
+        {
+            this.length--;
+            return list.pollFirst();
+        }
+        else
+            throw new RuntimeException("出队异常!");
+    }
+
+    public boolean isEmpty()
+    {
+        return this.length == 0;
+    }
 
 }
