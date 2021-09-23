@@ -141,7 +141,10 @@ class Tree
             //退出上述循环之后,开始在此节点的右子树继续查找
             //倘若不存在右子树
             if(temp.getRchild() == null)
+            {
                 temp.setRchild(node);
+                return;
+            }
             else
                 temp = temp.getRchild();
         }
