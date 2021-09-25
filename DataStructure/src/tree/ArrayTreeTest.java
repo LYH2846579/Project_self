@@ -15,8 +15,8 @@ public class ArrayTreeTest
     {
         int[] array = {1,2,3,4,5,6,7};
 
-        ArrayTree arrayTree = new ArrayTree(array);
-        arrayTree.preOrder(0);
+        //tree.HeapSort.ArrayTree arrayTree = new tree.HeapSort.ArrayTree(array);
+        //arrayTree.preOrder(0);
     }
 }
 
