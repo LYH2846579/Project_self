@@ -12,7 +12,7 @@ public class HeapSortTest
     @Test
     public void test()
     {
-        int[] arr= {4,6,8,5,9,10};
+        int[] arr= {4,6,8,5,9};
 
         ArrayTree1 ArrayTree1 = new ArrayTree1(arr);
 
@@ -69,7 +69,7 @@ class HeapSort
             curpos--;
         }
 
-        //此时小根堆已经建立
+        //此时第一个小根堆已经建立
         for (int i = 0; i < array.getLength(); i++)
         {
             array.getArray()[i] = RemoveMinKey(temp,temp.getLength()-i-1);
@@ -79,6 +79,7 @@ class HeapSort
     private int RemoveMinKey(ArrayTree1 temp,int n) {
         int key = temp.getArray()[0];
         temp.getArray()[0] = temp.getArray()[n];
+        //将剩下的元素调整为小根堆
         siftDown(temp,n,0);
         return key;
     }
