@@ -1,0 +1,27 @@
+对JDBC技术进行详细学习   2021.9.26
+
+1.Connection    ConnectionTest.java
+  1)使用读取配置文件的形式进行实现(使用FileInputStream获取配置文件)
+    将代码与数据进行分离，实现了解耦
+
+2.Statement存在的弊端
+  1) 需要进行字符串的拼串操作，过程繁琐
+  2) 无法避免SQL注入
+     SELECT user,password FROM user_table WHERE user = '"+ user +"' AND password = '"+password+"'"
+     一种SQL注入的方式
+     SELECT user,password FROM user_table WHERE user = '1' OR ' AND password = '=1 OR '1' = '1';
+     即：用户名:1' OR
+        密码:=1 OR '1' = '1
+
+
+3.在PreparedStatementTest.java中对数据库的操作进行实现
+  这里对整个连接过程进行复习
+   1) 读取配置文件，将所需要的内容读入内存
+   2) 根据读取到的内容，建立连接
+   3) 创建操纵数据库的sql语句(使用占位符1填充变量)
+   4) 从连接对象(connection)中获取preparedStatement对象
+   5) 将preparedStatement对象中的占位符进行逐一赋值(使用对应类型的进行赋值,且从1开始)
+   6) 执行代码
+   7) 进行错误处理try-catch-finally改进代码并将资源关闭
+
+4.是时候简单复习一下MySQL语法了
