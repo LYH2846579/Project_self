@@ -14,7 +14,7 @@ public class EcmDef
 //        args[1] = "2";
         try
         {
-//            int a = Integer.parseInt(args[0]);
+//            int statement = Integer.parseInt(args[0]);
 //            int b = Integer.parseInt(args[1]);
             int a = 12;
             int b = -4;

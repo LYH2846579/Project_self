@@ -19,7 +19,7 @@ public class ThreadTest
             public void run() {
                 synchronized (s1)
                 {
-                    s1.append("a");
+                    s1.append("statement");
                     s2.append("1");
 
                     //线程阻塞

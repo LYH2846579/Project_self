@@ -194,8 +194,8 @@ public class FileReadWriterTest
         //FileWriter fw = new FileWriter(file,true);    //在原有文件后追加
 
         //3.写出的操作
-        fw.write("I have a dream!");
-        fw.write("you need a dream too!");
+        fw.write("I have statement dream!");
+        fw.write("you need statement dream too!");
 
         //4.流资源关闭操作
         fw.close();

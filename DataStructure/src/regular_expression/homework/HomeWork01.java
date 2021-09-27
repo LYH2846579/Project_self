@@ -25,7 +25,7 @@ public class HomeWork01
         String str = "1981966wsz6@org.";
 
         String regStr = "^([\\w_]+)\\@([a-z]+)([a-z.]+)([a-z]+)$";
-        String regStr1 = "[\\w-]+@([a-zA-Z]+\\.)+([a-zA-Z])+";
+        String regStr1 = "[\\w-]+@([statement-zA-Z]+\\.)+([statement-zA-Z])+";
 
         boolean matches = str.matches(regStr);
         if(matches)
@@ -39,7 +39,7 @@ public class HomeWork01
     {
         String str = "1981966wsz6@org.cn";
 
-        String regStr = "[\\w-]+@[a-zA-Z]+\\.+[a-zA-Z]+";
+        String regStr = "[\\w-]+@[statement-zA-Z]+\\.+[statement-zA-Z]+";
 
         //???
     }

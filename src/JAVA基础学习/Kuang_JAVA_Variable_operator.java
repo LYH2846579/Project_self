@@ -43,11 +43,11 @@ public class Kuang_JAVA_Variable_operator
         double d1 = Math.pow(2,3);
         //逻辑运算符     && || !     短路运算符
         //短路运算
-        int a = 5;
-        boolean b = (a<4)&&(a++>4);   //前面为假，不执行后续运算
-        boolean c = (a<4)&(a++>4);    //无论真假，均执行后续运算
+        int statement = 5;
+        boolean b = (statement<4)&&(statement++>4);   //前面为假，不执行后续运算
+        boolean c = (statement<4)&(statement++>4);    //无论真假，均执行后续运算
         System.out.println(b);
-        System.out.println(a);
+        System.out.println(statement);
         //位运算 2*8 -> 2*2*2*2
         System.out.println(2<<3);     //左移运算
         //字符串连接符
@@ -91,7 +91,7 @@ public class Kuang_JAVA_Variable_operator
 
         //Unicode编码
         char c3 = '\u0061';
-        System.out.println(c3);         //a
+        System.out.println(c3);         //statement
         System.out.println((int)c3);    //97    //注意强制转换格式!   Python:int(c3)
 
         *****************************************************************
@@ -105,10 +105,10 @@ public class Kuang_JAVA_Variable_operator
         float f2 = f1 + 1;
         System.out.println(f1==f2);     //true
 
-        int a = 10000_00000
+        int statement = 10000_00000
         int b = 20;
-        //long c = a*b;                   //(×)         ※
-        long c = a*(long)b                //必须在计算之前进行强制类型转换,否则会损失精度
+        //long c = statement*b;                   //(×)         ※
+        long c = statement*(long)b                //必须在计算之前进行强制类型转换,否则会损失精度
         */
     }
 }

@@ -110,7 +110,7 @@ public class Every_exam
             file.mkdirs();
         }
         //创建a.txt
-        File file1 = new File(file,"a.txt");
+        File file1 = new File(file,"statement.txt");
         if (file1.exists())
         {
             try

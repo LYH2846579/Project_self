@@ -1,11 +1,10 @@
-package Connection;
+package connection;
 
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -102,7 +101,7 @@ public class ConnectionTest
         Properties pros = new Properties();
         //获取类的加载器读取配置文件     //获取系统加载器
         ClassLoader loader = ClassLoader.getSystemClassLoader();
-        //InputStream is = loader.getResourceAsStream("F:\\Java\\Project_self\\JDBC\\src\\Connection\\jdbc.properties");
+        //InputStream is = loader.getResourceAsStream("F:\\Java\\Project_self\\JDBC\\src\\connection\\jdbc.properties");
         //InputStream is = ConnectionTest.class.getClassLoader().getResourceAsStream("F:\\Java\\Project_self\\JDBC\\src\\jdbc.properties");
         //pros.load(is);
         //以上三种方式均会报空指针异常!

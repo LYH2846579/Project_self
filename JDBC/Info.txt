@@ -1,6 +1,6 @@
 对JDBC技术进行详细学习   2021.9.26
 
-1.Connection    ConnectionTest.java
+1.connection    ConnectionTest.java
   1)使用读取配置文件的形式进行实现(使用FileInputStream获取配置文件)
     将代码与数据进行分离，实现了解耦
 
@@ -24,4 +24,29 @@
    6) 执行代码
    7) 进行错误处理try-catch-finally改进代码并将资源关闭
 
-4.是时候简单复习一下MySQL语法了
+4.是时候简单复习一下MySQL语法了 ->  ?
+
+5.增删改操作     ->      是否可以统一形式化定义?
+  1) 获取数据库连接JDBCUtils.java
+  2) 预编译sql语句,返回PreparedStatement对象
+  3) 填充sql语句中的占位符
+  4) 执行sql语句
+  5) 关闭资源
+  6) 异常处理
+
+6.sql通用的增删改操作   -> PreparedStatementTest.java
+  在update()方法中实现了对配置文件中指定数据库中的表的增删改功能
+  附: ① SQL语句下标从1开始，一定要在填充占位符的时候小心！
+      ② 数据库中的表名最好不要使用关键字(如order),否则在操纵的时候容易出现错误(解决方案为`order`)
+
+7.查询操作(需要存储查询结果)  -> PreparedStatementTest.java
+  ① 创建结果集进行存储
+  ② 将每一个结果实例化到对应的一个类
+  ③ 将类输出
+  附:ResultSet.next() -> 判断是否有下一行元素存在,返回boolean,若存在,将指针下移一位
+
+8.通用查询方式
+  1) 针对于某一个表的普遍查询方式
+  2) 首先使用空参构造器创建对象,接着使用反射获取到对应的属性值,对对应的属性值进行赋值
+附:当SQL中列名与JAVA类的属性名不一致时.在SQL语句中添加别名,以适应通过反射获取对象名(起别名)
+   ->   获取列的别名 rsmd.getColumnLabel(i+1)
