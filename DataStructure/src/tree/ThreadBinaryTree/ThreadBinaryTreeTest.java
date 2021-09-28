@@ -172,8 +172,8 @@ class ThreadBinaryTree
         //if(pre == null)
         pre = node;
         //2.进行线索化   使得前序结点的右指针指向此节点???
-        //if(!node.isIslchild() && node.getLchild()!=null && !node.getLchild().isIsrchild())//根本用不上!
-        //    node.getLchild().setRchild(node);
+        //if(!Node.isIslchild() && Node.getLchild()!=null && !Node.getLchild().isIsrchild())//根本用不上!
+        //    Node.getLchild().setRchild(Node);
 
         //处理右子树
         if(node.isIsrchild() && node.getRchild() != null)
