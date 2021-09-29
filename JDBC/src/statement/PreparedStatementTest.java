@@ -316,7 +316,64 @@ public class PreparedStatementTest
         {
             JDBCUtils.closeResource(connection,ps,rs);
         }
+    }
 
+    @Test
+    public void test7() //再次对表的通用查询操纵进行复习
+    {
+        String sql = "SELECT * FROM STUINFO WHERE ID >= ?;";
+        int id = 3;
+        query1(sql,id);
+    }
+    public void query1(String sql,Object ... args)
+    {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try
+        {
+            //获取连接
+             connection = JDBCUtils.getConnection();
+            //sql+ps
+            ps = connection.prepareStatement(sql);
+            //填充占位符
+            for (int i = 0; i < args.length; i++)
+            {
+                ps.setObject(i+1,args[i]);
+            }
+            //执行sql
+            rs = ps.executeQuery();
+            //获取原数据
+            ResultSetMetaData rsmd = rs.getMetaData();
+            //获取列数
+            int columnCount = rsmd.getColumnCount();
+            //创建结果对象
+            while(rs.next())
+            {
+                //使用空参构造器创建对象
+                StudInfo s = new StudInfo();
+                //遍历结果集
+                for (int i = 0; i < columnCount; i++)
+                {
+                    //获取列元素
+                    Object object = rs.getObject(i + 1);
+                    //获取列属性值
+                    String columnLabel = rsmd.getColumnLabel(i + 1);
+                    //使用反射设置属性值
+                    Field field = StudInfo.class.getDeclaredField(columnLabel);
+                    field.setAccessible(true);
+                    field.set(s,object);
+                    int o;  //消除重复代码提醒
+                }
+                System.out.println(s);
+            }
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        } finally
+        {
+            JDBCUtils.closeResource(connection,ps,rs);
+        }
 
     }
 }
