@@ -52,3 +52,14 @@
    ->   获取列的别名 rsmd.getColumnLabel(i+1)
 
 9.在PreparedStatementQueryTest中对针对不同表的查询进行实现
+  参数列表: sql+t.Class+Object ... args
+  1)首先建立连接 -> 使用配置文件读取的方式Properties等获取用户+类型信息
+  2)获取到PreparedStatement的实例化对象ps,加载sql
+  3)将占位符依次赋值 -> args
+  4)执行sql语句获取到结果集rs
+  5)获取结果集的元数据 rsmd
+  6)判断rs是否存在下一条记录 -> while(rs.next)
+  7)若存在下一条记录，创建空参对象，获取列名和列值 getColumnLabel+getObject
+  8)使用反射将对应属性的值赋值   t.getClass().getDeclaredField().var
+  9)将对应的对象装载如list中，在执行完上述while语句之后将list返回
+  10)进行错误处理及资源关闭
