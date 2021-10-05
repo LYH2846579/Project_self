@@ -63,3 +63,11 @@
   8)使用反射将对应属性的值赋值   t.getClass().getDeclaredField().var
   9)将对应的对象装载如list中，在执行完上述while语句之后将list返回
   10)进行错误处理及资源关闭
+
+10.在Practise.java中对使用JAVA数据库操作进行练习
+   1) 从控制台向数据库的表customer中插入一条数据
+    -> 一定小心插入数据时,当未使用到所有的列时的操作 INSERT INTO CUSTOMERS(id,`name`,email,birth) VALUES(?,?,?,?);
+    -> 小心Date类型转化问题及插入问题
+   2) 创建数据库表examstudent
+
+11.在BolbTest.java中测试使用PreparedStatement操作Blob类型的数据
