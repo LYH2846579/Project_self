@@ -70,4 +70,9 @@
     -> 小心Date类型转化问题及插入问题
    2) 创建数据库表examstudent
 
-11.在BolbTest.java中测试使用PreparedStatement操作Blob类型的数据
+11.在BlobTest.java中测试使用PreparedStatement操作Blob类型的数据
+
+12.在InsertTest.java中对使用PreparedStatement实现批量插入的功能
+   1)addBatch(String):添加需要批量处理的SQL语句或是参数
+   2)executeBatch():执行批量处理语句
+   3)clearBatch():清空缓存数据

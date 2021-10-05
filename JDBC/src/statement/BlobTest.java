@@ -95,4 +95,96 @@ public class BlobTest
             }
         }
     }
+
+    //插入和读取Blob字段
+    @Test
+    public void test3()
+    {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        FileInputStream fis = null;
+        try
+        {
+            connection = JDBCUtils.getConnection();
+            String sql = "INSERT INTO CUSTOMERS(id,name,email,birth,photo) VALUES(?,?,?,?,?);";
+            ps = connection.prepareStatement(sql);
+            ps.setObject(1,21);
+            ps.setObject(2,"张三丰");
+            ps.setObject(3,"123456@qq.com");
+            ps.setObject(4,"2020-07-31");
+            fis = new FileInputStream("F:\\Java\\Project_self\\JDBC\\src\\statement\\Mario.gif");
+            ps.setBlob(5,fis);
+
+            ps.execute();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        } finally
+        {
+            JDBCUtils.closeResource(connection,ps);
+            try
+            {
+                if(fis != null)
+                    fis.close();
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+    @Test
+    public void test4()
+    {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        FileInputStream fis = null;
+        try
+        {
+            connection = JDBCUtils.getConnection();
+            String sql = "SELECT id,name,email,birth,photo FROM CUSTOMERS WHERE ID = ?;";
+            ps = connection.prepareStatement(sql);
+            ps.setObject(1,21);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next())
+            {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String email = rs.getString("email");
+                Date birth = rs.getDate("birth");
+                Customer c = new Customer(id,name,email,birth);
+                System.out.println(c);
+            }
+
+            //接收Blob资源
+            Blob photo = rs.getBlob("photo");
+            //加载输入流资源
+            InputStream is = photo.getBinaryStream();
+            //加载输出流资源
+            FileOutputStream fos = new FileOutputStream("zhangsanfeng.gif");
+            //开始读取资源
+            byte[] bbuf = new byte[1024];
+            int read = 0;
+            while((read = is.read(bbuf)) != -1)
+            {
+                fos.write(bbuf,0,read);
+            }
+
+            ps.execute();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        } finally
+        {
+            JDBCUtils.closeResource(connection,ps);
+            try
+            {
+                if(fis != null)
+                    fis.close();
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }
