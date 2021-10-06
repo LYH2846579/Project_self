@@ -76,3 +76,8 @@
    1)addBatch(String):添加需要批量处理的SQL语句或是参数
    2)executeBatch():执行批量处理语句
    3)clearBatch():清空缓存数据
+
+13.在TransactionTest.java中对数据库事务进行学习
+   1) 由于在提交之后无法进行rollback，因此使用外部连接方式+手动停止提交操作
+   附:由外部传入的Connection在内部无需关闭
+   2) 同时对数据库的隔离级别的设置进行学习
